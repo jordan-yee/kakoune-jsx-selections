@@ -20,8 +20,8 @@ import fs from "fs";
 // functions to each valid argument later on, without having to keep a duplicate
 // list of strings in sync.
 const validTargets = {
-  currentTag: "currentTag",
-  nextTag: "nextTag",
+  currentJsxElement: "currentJsxElement",
+  nextJsxElement: "nextJsxElement",
 };
 
 // -----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ const filePath = args[1];
 // Target the specified node if valid, else use a default target.
 const targetNode = validTargets.hasOwnProperty(args[2])
   ? args[2]
-  : validTargets.currentTag;
+  : validTargets.currentJsxElement;
 
 // -----------------------------------------------------------------------------
 // Read File
@@ -92,8 +92,8 @@ function getJsxElementAfterOffset() {
 // Program Output
 
 const targetQueries = {
-  [validTargets.currentTag]: getJsxElementAtOffset,
-  [validTargets.nextTag]: getJsxElementAfterOffset,
+  [validTargets.currentJsxElement]: getJsxElementAtOffset,
+  [validTargets.nextJsxElement]: getJsxElementAfterOffset,
 };
 
 /**
