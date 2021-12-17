@@ -1,0 +1,24 @@
+{
+  "name": "kakoune-jsx-selections",
+  "version": "0.0.0-alpha",
+  "description": "A Kakoune plugin providing custom selections for JSX files.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jordan-yee/kakoune-jsx-selections.git"
+  },
+  "keywords": [
+    "Kakoune",
+    "Plugins",
+    "JavaScript",
+    "JSX",
+    "ReactJS",
+    "React"
+  ],
+  "author": "Jordan Yee",
+  "license": "unlicense",
+  "bugs": {
+    "url": "https://github.com/jordan-yee/kakoune-jsx-selections/issues"
+  },
+  "homepage": "https://github.com/jordan-yee/kakoune-jsx-selections#readme"
+}
