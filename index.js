@@ -73,18 +73,22 @@ const parsedFile = jsxParser.parse(fileContents, {
 extend(base);
 
 /**
- * Find the JSX Node at a offset in the parsed file.
+ * Find a JSX node at the given offset in the parsed file.
+ *
+ * @param {string} nodeType - the specific type of node to find
  */
-function getJsxElementAtOffset() {
-  const node = findNodeAround(parsedFile, targetOffset, "JSXElement");
+function findNodeAtOffset(nodeType) {
+  const node = findNodeAround(parsedFile, targetOffset, nodeType);
   return node;
 }
 
 /**
  * Find a JSX node after the node at the given offset in the parsed file.
+ *
+ * @param {string} nodeType - the specific type of node to find
  */
-function getJsxElementAfterOffset() {
-  const node = findNodeAfter(parsedFile, targetOffset, "JSXElement");
+function findNodeAfterOffset(nodeType) {
+  const node = findNodeAfter(parsedFile, targetOffset, nodeType);
   return node;
 }
 
@@ -92,8 +96,8 @@ function getJsxElementAfterOffset() {
 // Program Output
 
 const targetQueries = {
-  [validTargets.currentJsxElement]: getJsxElementAtOffset,
-  [validTargets.nextJsxElement]: getJsxElementAfterOffset,
+  [validTargets.currentJsxElement]: () => findNodeAtOffset("JSXElement"),
+  [validTargets.nextJsxElement]: () => findNodeAfterOffset("JSXElement"),
 };
 
 /**
