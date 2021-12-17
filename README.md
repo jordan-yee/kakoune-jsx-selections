@@ -33,6 +33,11 @@ plug 'jordan-yee/kakoune-jsx-selections' do %{
 :plug-install
 ```
 
+## Uninstalling
+The included NodeJS program is installed using `npm link`, which creates a global symbolic link, which enables the command to be run from anywhere.
+
+To uninstall this, run `npm rm --global kakoune-jsx-selections`.
+
 ## Provided Commands
 Here is a reference of the provided commands:
 
