@@ -22,6 +22,8 @@ import fs from "fs";
 const validTargets = {
   currentJsxElement: "currentJsxElement",
   nextJsxElement: "nextJsxElement",
+  currentFunction: "currentFunction",
+  nextFunction: "nextFunction",
 };
 
 // -----------------------------------------------------------------------------
@@ -98,6 +100,8 @@ function findNodeAfterOffset(nodeType) {
 const targetQueries = {
   [validTargets.currentJsxElement]: () => findNodeAtOffset("JSXElement"),
   [validTargets.nextJsxElement]: () => findNodeAfterOffset("JSXElement"),
+  [validTargets.currentFunction]: () => findNodeAtOffset("Function"),
+  [validTargets.nextFunction]: () => findNodeAfterOffset("Function"),
 };
 
 /**
