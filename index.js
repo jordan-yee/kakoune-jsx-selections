@@ -1,36 +1,51 @@
 #!/usr/bin/env node
 
-import { extend } from "acorn-jsx-walk";
-import { findNodeAround, findNodeAfter, base } from "acorn-walk";
+// Acorn Core
+import { Parser } from "acorn";
 import jsx from "acorn-jsx";
 
+// Acorn Walk
+import { findNodeAround, findNodeAfter, base } from "acorn-walk";
+import { extend } from "acorn-jsx-walk";
+
+// File System
 import fs from "fs";
-import { Parser } from "acorn";
+
+// -----------------------------------------------------------------------------
+// Data
+
+// This is needed up front in order to validate arguments to the program before
+// wasting time parsing things.
+// An object is used instead of an Array so that we can assign the appropriate
+// functions to each valid argument later on, without having to keep a duplicate
+// list of strings in sync.
+const validTargets = {
+  currentTag: "currentTag",
+  nextTag: "nextTag",
+};
 
 // -----------------------------------------------------------------------------
 // Parse Program Args
 
+// Get added args
 const args = process.argv.slice(2);
 
+// ARG 1:
 // Kakoune val: kak_cursor_byte_offset
 const targetOffset = parseInt(args[0]);
+
+// ARG 2:
 // Kakoune val: kak_buffile
 const filePath = args[1];
 
-// By default target the current node
-// If specified target the subsequent node
-const targetNode = args[2] === "after" ? args[2] : "current";
+// ARG 3:
+// Target the specified node if valid, else use a default target.
+const targetNode = validTargets.hasOwnProperty(args[2])
+  ? args[2]
+  : validTargets.currentTag;
 
 // -----------------------------------------------------------------------------
-// Apply JSX Acorn Extensions
-
-// Extend Parser
-const jsxParser = Parser.extend(jsx());
-// Extend Walker Base
-extend(base);
-
-// -----------------------------------------------------------------------------
-// Parse File Into AST
+// Read File
 
 let fileContents;
 try {
@@ -39,6 +54,11 @@ try {
   console.error(err);
 }
 
+// -----------------------------------------------------------------------------
+// Parse File Into AST
+
+// Extend Parser
+const jsxParser = Parser.extend(jsx());
 const parsedFile = jsxParser.parse(fileContents, {
   ecmaVersion: "latest",
   sourceType: "module",
@@ -49,10 +69,13 @@ const parsedFile = jsxParser.parse(fileContents, {
 // -----------------------------------------------------------------------------
 // Walk Parsed AST
 
+// Extend Base Walker
+extend(base);
+
 /**
  * Find the JSX Node at a offset in the parsed file.
  */
-function getJsxNodeAtOffset() {
+function getJsxElementAtOffset() {
   const node = findNodeAround(parsedFile, targetOffset, "JSXElement");
   return node;
 }
@@ -60,7 +83,7 @@ function getJsxNodeAtOffset() {
 /**
  * Find a JSX node after the node at the given offset in the parsed file.
  */
-function getJsxNodeAfterOffset() {
+function getJsxElementAfterOffset() {
   const node = findNodeAfter(parsedFile, targetOffset, "JSXElement");
   return node;
 }
@@ -68,13 +91,18 @@ function getJsxNodeAfterOffset() {
 // -----------------------------------------------------------------------------
 // Program Output
 
+const targetQueries = {
+  [validTargets.currentTag]: getJsxElementAtOffset,
+  [validTargets.nextTag]: getJsxElementAfterOffset,
+};
+
 /**
  * Build a string representing the Kakoune command for selecting the given node.
  *
- * @param {object} An object implementing the Found interface from the
+ * @param {object} foundNode An object implementing the Found interface from the
  * acorn-walk library. The `foundNode.node` property provides data on the found
  * node.
- * @returns {string} The Kakound command to select the given node.
+ * @returns {string} The Kakoune command to select the given node.
  */
 function getKakSelectionCommand(foundNode) {
   const anchorLine = foundNode.node.loc.start.line;
@@ -86,8 +114,7 @@ function getKakSelectionCommand(foundNode) {
   return `select ${anchorLine}.${anchorColumn},${cursorLine}.${cursorColumn}`;
 }
 
-const foundNode =
-  targetNode === "current" ? getJsxNodeAtOffset() : getJsxNodeAfterOffset();
+const foundNode = targetQueries[targetNode]();
 
 if (foundNode) {
   console.log(getKakSelectionCommand(foundNode));
