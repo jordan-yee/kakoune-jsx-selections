@@ -17,6 +17,7 @@ This plugin requires the following applications to be installed on your system.
 1. Add this to your kakrc:
 ```
 plug 'jordan-yee/kakoune-jsx-selections' do %{
+    npm install
     npm link
 } config %{
     declare-user-mode jsx-selections
