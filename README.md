@@ -1,10 +1,17 @@
 # Kakoune JSX Selections
 A Kakoune plugin providing custom selections for JSX code.
 
-> NOTE: Currently, this plugin should be considered proof-of-concept.
+> NOTE: Currently, this plugin should be considered alpha and is subject to breaking changes.
 
 ## Background
-When using Kakoune to work on a ReactJS-based project, I've found manipulating the React elements / DOM tags embedded in JSX files to be one of the biggest pain-points. This plugin aims to improve that experience.
+When using Kakoune to work on a ReactJS-based project, I've found manipulating the React elements / DOM tags embedded in JSX files to be one of the biggest pain-points.
+This plugin initially aimed to improve that experience specifically, but because it is based on a proper AST parser it made sense to support other syntactic objects as well.
+
+## Scope
+This plugin is focused solely on providing useful selections for JavaScript/JSX code (and should work for TypeScript as well).
+Because Kakoune uses the subject-verb model, the provided selections can naturally be followed up with any desired actions.
+Including only selections also makes the plugin quite safe and robust.
+If a selection fails or is incorrect due to a bug, no code was changed, and the user can manually correct the selection and continue working without disruption.
 
 ## Dependencies
 This plugin requires the following applications to be installed on your system.
@@ -53,3 +60,24 @@ Here is a reference of the provided commands:
 
 ## Developer Notes
 This plugin is based on the Acorn JavaScript parser, which is used to parse a JavaScript or JSX file into an AST that in turn can be used to reliably find the structures we want to select.
+
+### TODOs
+Here is a brain dump of updates I have in mind.
+
+Features:
+- [] select-previous-* commands
+- [] select-parent-element
+- [] select-first-child-element
+- [] select-*-expression commands
+- [] auto-generate selection commands from all AST node types
+
+Design Improvements:
+- [] provide command that automatically applies suggested mappings
+- [] improve ergonomics of suggested mappings
+
+Technical Improvements:
+- [] wrap all provided commands in a module
+- [] only define commands for JavaScript filetype
+- [] investigate trade-offs between `npm link` vs published npm package strategies
+- [] review plugin standards and update or refactor as needed
+- [] implement versioning w/ changelog
