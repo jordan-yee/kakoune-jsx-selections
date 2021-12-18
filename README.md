@@ -30,9 +30,9 @@ plug 'jordan-yee/kakoune-jsx-selections' do %{
 } config %{
     declare-user-mode jsx-selections
     map global jsx-selections c ': jsx-select-current-element<ret>' -docstring 'select the element at the cursor'
-    map global jsx-selections n ': jsx-select-next-element<ret>' -docstring 'select the element at the cursor'
+    map global jsx-selections n ': jsx-select-next-element<ret>' -docstring 'select next element after the cursor'
     map global jsx-selections f ': jsx-select-current-function<ret>' -docstring 'select the function at the cursor'
-    map global jsx-selections j ': jsx-select-next-function<ret>' -docstring 'select the function at the cursor'
+    map global jsx-selections j ': jsx-select-next-function<ret>' -docstring 'select next function after the cursor'
 
     map global user x ': enter-user-mode jsx-selections<ret>' -docstring 'jsx-selections mode'
     map global user X ': enter-user-mode -lock jsx-selections<ret>' -docstring 'jsx-selections mode'
