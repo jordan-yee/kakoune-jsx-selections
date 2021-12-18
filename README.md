@@ -10,6 +10,7 @@ This plugin initially aimed to improve that experience specifically, but because
 ## Scope
 This plugin is focused solely on providing useful selections for JavaScript/JSX code (and should work for TypeScript as well).
 Because Kakoune uses the subject-verb model, the provided selections can naturally be followed up with any desired actions.
+
 Including only selections also makes the plugin quite safe and robust.
 If a selection fails or is incorrect due to a bug, no code was changed, and the user can manually correct the selection and continue working without disruption.
 
@@ -48,7 +49,7 @@ The included NodeJS program is installed using `npm link`, which creates a globa
 
 To uninstall this, run `npm rm --global kakoune-jsx-selections`.
 
-## Provided Commands
+## Commands
 Here is a reference of the provided commands:
 
 | Command                     | Description                           |
@@ -65,19 +66,19 @@ This plugin is based on the Acorn JavaScript parser, which is used to parse a Ja
 Here is a brain dump of updates I have in mind.
 
 Features:
-- [] select-previous-* commands
-- [] select-parent-element
-- [] select-first-child-element
-- [] select-*-expression commands
-- [] auto-generate selection commands from all AST node types
+- [ ] select-previous-* commands
+- [ ] select-parent-element
+- [ ] select-first-child-element
+- [ ] select-*-expression commands
+- [ ] auto-generate selection commands from all AST node types
 
 Design Improvements:
-- [] provide command that automatically applies suggested mappings
-- [] improve ergonomics of suggested mappings
+- [ ] provide command that automatically applies suggested mappings
+- [ ] improve ergonomics of suggested mappings
 
 Technical Improvements:
-- [] wrap all provided commands in a module
-- [] only define commands for JavaScript filetype
-- [] investigate trade-offs between `npm link` vs published npm package strategies
-- [] review plugin standards and update or refactor as needed
-- [] implement versioning w/ changelog
+- [ ] wrap all provided commands in a module
+- [ ] only define commands for JavaScript filetype
+- [ ] investigate trade-offs between `npm link` vs published npm package strategies
+- [ ] review plugin standards and update or refactor as needed
+- [ ] implement versioning w/ changelog
