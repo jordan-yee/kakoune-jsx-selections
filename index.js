@@ -36,15 +36,12 @@ const validTargets = {
 const parsedArgs = yargs(process.argv.slice(2)).argv;
 console.error("parsedArgs", parsedArgs);
 
-// ARG 1:
 // Kakoune val: kak_cursor_byte_offset
 const targetOffset = parsedArgs.targetOffset;
 
-// ARG 2:
 // Kakoune val: kak_buffile
 const filePath = parsedArgs.filePath;
 
-// ARG 3:
 // Target the specified node if valid, else use a default target.
 const targetNodeArg = parsedArgs.targetNode;
 const targetNode = validTargets.hasOwnProperty(targetNodeArg)
