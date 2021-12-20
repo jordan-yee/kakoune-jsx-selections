@@ -77,6 +77,7 @@ Design Improvements:
 - [ ] improve ergonomics of suggested mappings
 
 Technical Improvements:
+- [ ] Use buffer contents to determine selections rather than file contents
 - [ ] wrap all provided commands in a module
 - [ ] only define commands for JavaScript filetype
 - [ ] investigate trade-offs between `npm link` vs published npm package strategies
