@@ -11,6 +11,9 @@ import { extend } from "acorn-jsx-walk";
 // File System
 import fs from "fs";
 
+// Argument Handling
+import yargs from "yargs";
+
 // -----------------------------------------------------------------------------
 // Data
 
@@ -30,20 +33,22 @@ const validTargets = {
 // Parse Program Args
 
 // Get added args
-const args = process.argv.slice(2);
+const parsedArgs = yargs(process.argv.slice(2)).argv;
+console.error("parsedArgs", parsedArgs);
 
 // ARG 1:
 // Kakoune val: kak_cursor_byte_offset
-const targetOffset = parseInt(args[0]);
+const targetOffset = parsedArgs.targetOffset;
 
 // ARG 2:
 // Kakoune val: kak_buffile
-const filePath = args[1];
+const filePath = parsedArgs.filePath;
 
 // ARG 3:
 // Target the specified node if valid, else use a default target.
-const targetNode = validTargets.hasOwnProperty(args[2])
-  ? args[2]
+const targetNodeArg = parsedArgs.targetNode;
+const targetNode = validTargets.hasOwnProperty(targetNodeArg)
+  ? targetNodeArg
   : validTargets.currentJsxElement;
 
 // -----------------------------------------------------------------------------
